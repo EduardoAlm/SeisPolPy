@@ -5,6 +5,7 @@ import time
 start_time = time.time()
 import io
 import base64
+import mat4py
 
 class FlinnMethod:
     """
@@ -150,3 +151,8 @@ class FlinnMethod:
         print("Execution time:", time.time()-start_time)
 
         return b64jpgdata
+
+data = mat4py.loadmat('ACRG.mat') # seismic data
+sig = np.array([data['t'], data['r'], data['z']])
+res = FlinnMethod.flinn(sig)
+print(res)

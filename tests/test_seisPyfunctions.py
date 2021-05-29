@@ -1,5 +1,10 @@
-from SeisPolPy import seisPolPyfunctions
+#from SeisPolPy import seisPolPyfunctions
+from SeisPolPy.Flinn import FlinnMethod
 import mat4py
+import numpy as np
 
-def test_haversine():
-    assert seisPolPyfunctions.flinn(52.370216, 4.895168, 52.520008,13.404954) == 945793.4375088713
+
+#def test_flinn():
+data = mat4py.loadmat('ACRG.mat') # seismic data
+sig = np.array([data['t'], data['r'], data['z']])
+res = FlinnMethod.flinn(sig)
