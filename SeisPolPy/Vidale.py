@@ -12,12 +12,14 @@ import io
 import base64
 
 class VidaleMethod:
-
+    """
+    """
     def __init__(self, data):
         self.data = data
 
     def vidale(self):
-
+        """
+        """
         sig = self.data.obj
         # Application of the Hilbert transform
         t_h = signal.hilbert(sig[0])

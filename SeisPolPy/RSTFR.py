@@ -14,19 +14,26 @@ import diags
 
 
 class RSTFRMethod:
-
+    """
+    """
     def __init__(self, data):
         self.data = data
 
     def filtering():
+        """
+        """
         return 1
 
     def soft_threshholding(z, T):
+        """
+        """
         az = np.abs(z)
         res = np.maximum(az-T, 0)/(np.maximum(az-T,0)+T)*z
         return np.abs(res)
 
     def cross(x1, x2):
+        """
+        """
         x = x1 * np.conj(x2)
         length = len(x1)
         half = np.ceil(length/2).astype(np.int)
@@ -37,7 +44,8 @@ class RSTFRMethod:
         return corr
 
     def semimm(t, r, z):
-
+        """
+        """
         length = len(t)
         half = math.ceil(length/2)
         semi = np.zeros((12, half))
@@ -65,6 +73,8 @@ class RSTFRMethod:
         return semi, major, minor, major_norm, minor_norm
 
     def forward(N, s):
+        """
+        """
         #cdef np.ndarray
         id = np.linspace(0, N-1, N, dtype="int32")
         #cdef np.ndarray
@@ -89,6 +99,8 @@ class RSTFRMethod:
         return sp.dia_matrix((res, offset), shape=(N, pow(N, 2)))
 
     def stft_s_ist(x, y, z, s, n_it, mu):
+        """
+        """
         N = len(x)
         d1, d2, d3 = x, y, z
         dh1, dh2, dh3 = d1, d2, d3
@@ -113,6 +125,8 @@ class RSTFRMethod:
         return np.reshape(tfx, (N, N)), np.reshape(tfy, (N, N)), np.reshape(tfz, (N, N))
 
     def stft(x, s):
+        """
+        """
         N = len(x)
         G = RSTFRMethod.forward(N, s)
 
@@ -122,10 +136,10 @@ class RSTFRMethod:
 
 
     def rstfr(self):
-
+        """
+        """
         sig = self.data.obj
         start_time = time.time()
-        print(RSTFRMethod.filtering())
         input_var=input("Do you which to run the code using normal STFT or using the sparse STFT: [1. STFT | 2. S_STFT]\n")
 
         plt.rcParams['figure.figsize'] = [13, 8]
@@ -159,6 +173,9 @@ class RSTFRMethod:
                 majornorm[i, j], minornorm[i, j] = np.sqrt(np.dot(majo[:, i, j],majo[:, i, j])), np.sqrt(np.dot(mino[:, i, j],mino[:, i, j]))
             print("Normalising the output values ... ",np.round(i*100/nf, 2), "%")
 
+        
+        print(RSTFRMethod.filtering())
+        
         cax = np.max((np.max(majornorm), np.max(minornorm)))
         
         plt.imshow(np.abs(majornorm), cmap='hot', alpha=alpha, vmin=0, vmax=0.7*cax)
@@ -166,6 +183,8 @@ class RSTFRMethod:
 
         plt.imshow(np.abs(minornorm), cmap="hot", alpha=alpha, vmin=0, vmax=0.7*cax)
         plt.title('RS-TFR (Sm)')
+
+        
 
         StringIObytes = io.BytesIO()
         plt.savefig(StringIObytes, format='jpg')

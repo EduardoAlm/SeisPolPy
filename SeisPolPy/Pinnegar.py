@@ -11,12 +11,14 @@ import io
 import base64
 
 class PinnegarMethod:
-
+    """
+    """
     def __init__(self, data):
         self.data = data
 
     def forward(N, s):
-        
+        """
+        """
         id = np.linspace(0, N-1, N, dtype="int32")
         w = np.zeros([N, N], dtype=DTYPE)
 
@@ -34,13 +36,16 @@ class PinnegarMethod:
         return sp.dia_matrix((res, offset), shape=(N, pow(N, 2)))
 
     def stft(x, s):
+        """
+        """
         N = len(x)
         G = PinnegarMethod.forward(N, s)
         tfx = adjoint.adjoin(G, N, x)
         return np.reshape(tfx,(N, N))
 
     def pinnegar(self):
-
+        """
+        """
         sig = self.data.obj
 
         plt.rcParams['figure.figsize'] = [16, 12]
