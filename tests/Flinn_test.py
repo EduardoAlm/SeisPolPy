@@ -1,7 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
 from scipy import signal
-import scipy
 import time
 start_time = time.time()
 import io
@@ -174,11 +173,10 @@ class FlinnMethod:
         StringIObytes.seek(0)
         b64jpgdata = base64.b64encode(StringIObytes.read())
 
-        print("Execution time:", time.time()-start_time)
-
-        return b64jpgdata
+        return g1, g2_z, g2_r, g2_t, b64jpgdata
 
 data = mat4py.loadmat('tests/ACRG.mat') # seismic data
 sig = np.array([data['t'], data['r'], data['z']])
 res = FlinnMethod.flinn(sig)
 print(res)
+print("Execution time:", time.time()-start_time)

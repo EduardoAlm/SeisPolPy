@@ -9,6 +9,7 @@ DTYPE = np.float64
 import diags
 import io 
 import base64
+import mat4py
 
 class PinnegarMethod:
 
@@ -150,7 +151,9 @@ class PinnegarMethod:
         StringIObytes.seek(0)
         b64jpgdata = base64.b64encode(StringIObytes.read())
 
-        print("Time of execution", time.time()-start_time)
-
         return smajor, sminor, inclin, omega, phi, ohm, omega0, phi0, b64jpgdata
 
+data = mat4py.loadmat('tests/ACRG.mat') # seismic data
+sig = np.array([data['t'], data['r'], data['z']])
+smajor, sminor, inclin, omega, phi, ohm, omega0, phi0, b64jpgdata = PinnegarMethod.pinnegar(sig)
+print("Execution time:", time.time()-start_time)
