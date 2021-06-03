@@ -148,7 +148,6 @@ class PinnegarMethod:
         plt.title("Semi Minor")
 
         StringIObytes = io.BytesIO()
-        fig.tight_layout()
         plt.savefig(StringIObytes, format='jpg')
         plt.show()
 

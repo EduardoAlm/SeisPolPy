@@ -143,6 +143,6 @@ class FlinnMethod:
 
 data = mat4py.loadmat('tests/ACRG.mat') # seismic data
 sig = np.array([data['t'], data['r'], data['z']])
-res = FlinnMethod.flinn(sig)
+g1, g2_z, g2_r, g2_t, b64jpgdata = FlinnMethod.flinn(sig)
 print(res)
 print("Execution time:", time.time()-start_time)

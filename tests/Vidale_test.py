@@ -143,6 +143,6 @@ class VidaleMethod:
 
 data = mat4py.loadmat('tests/ACRG.mat') # seismic data
 sig = np.array([data['t'], data['r'], data['z']])
-elliptical_pol, strike, dip, pol_strength, degree_planar_pol = VidaleMethod.vidale(sig)
+elliptical_pol, strike, dip, pol_strength, degree_planar_pol, b64jpgdata= VidaleMethod.vidale(sig)
 print("Execution time:", time.time()-start_time)
 
