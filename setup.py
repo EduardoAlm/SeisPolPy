@@ -3,7 +3,7 @@ from setuptools import find_packages, setup
 
 setup(
     name='SeisPolPy',
-    packages=find_packages(include=["seisPolPyfunctions"]),
+    packages=find_packages(include=["Flinn", "Pinnegar", "RSTFR", "Vidale"]),
     version='0.1.0',
     description='A Python Library for the PROCESSING of SEISMIC TIME SERIES',
     author='Eduardo Rodrigues de Almeida & Hamzeh Mohammadigheymasi',

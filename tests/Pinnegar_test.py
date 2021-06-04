@@ -148,7 +148,7 @@ class PinnegarMethod:
         plt.show()
 
         StringIObytes.seek(0)
-        b64jpgdata = base64.b64encode(StringIObytes.read())
+        b64jpgdata = base64.b64encode(StringIObytes.read()).decode()
 
         return smajor, sminor, inclin, omega, phi, ohm, omega0, phi0, b64jpgdata
 

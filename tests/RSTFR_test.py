@@ -161,18 +161,19 @@ class RSTFRMethod:
 
         cax = np.max((np.max(majornorm), np.max(minornorm)))
         
-        plt.imshow(np.abs(majornorm), cmap='hot', alpha=alpha, vmin=0, vmax=0.7*cax)
+        plt.imshow(np.abs(majornorm), cmap='hot', alpha=1, vmin=0, vmax=0.7*cax)
         plt.title('RS-TFR (SM)')    
-
-        plt.imshow(np.abs(minornorm), cmap="hot", alpha=alpha, vmin=0, vmax=0.7*cax)
+        plt.show()
+        plt.imshow(np.abs(minornorm), cmap="hot", alpha=1, vmin=0, vmax=0.7*cax)
         plt.title('RS-TFR (Sm)')
+        plt.show()
 
         StringIObytes = io.BytesIO()
         plt.savefig(StringIObytes, format='jpg')
-        plt.show()
+        
 
         StringIObytes.seek(0)
-        b64jpgdata = base64.b64encode(StringIObytes.read())
+        b64jpgdata = base64.b64encode(StringIObytes.read()).decode()
 
         return np.abs(majornorm), np.abs(minornorm), b64jpgdata
 
