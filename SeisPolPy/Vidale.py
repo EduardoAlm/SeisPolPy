@@ -22,18 +22,19 @@ class VidaleMethod:
 
     def vidale(data, window_size):
         """
-        Obtaining the elliptical component of polarization, strike, inclination (dip), 
-        polarization strenght of the signal and the degree of planar polarization by implementing
-        the method designed by John E. Vidale.
+        Obtaining the elliptical component of polarization, strike, inclination (dip), \
+        polarization strenght of the signal and the degree of planar polarization by implementing \
+        the method designed by John E. Vidale. \
         Signal in Z, R, T orientation.
 
-        :param data: Three component signal data.
+        :parameter data: Three component signal data.
         :type data: array   
-        :param window_size: Size for the window.
+        :parameter window_size: Size for the window.
         :type data: int
-        :returns: numpy array with elliptical component of polarization, numpy array with strike, 
-        numpy array with dip, numpy array with polarization strenght of the signal and a numpy 
+        :return: numpy array with elliptical component of polarization, numpy array with strike, \
+        numpy array with dip, numpy array with polarization strenght of the signal and a numpy \
         array with degree of planar polarization.
+
         """
         sig = data
 
@@ -161,6 +162,3 @@ class VidaleMethod:
         print("Execution time:", time.time()-start_time)
 
         return elliptical_pol, strike, dip, pol_strength, degree_planar_pol, b64jpgdata
-
-
-

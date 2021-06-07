@@ -4,7 +4,7 @@ Pinnegar Method.
 :copyright:
     Eduardo Rodrigues de Almeida
 :license:
-    The MIT License (MIT)
+    The MIT License (MIT) 
     Copyright (c) 2021 MrEdwards
 """
 import numpy as np
@@ -24,7 +24,7 @@ class PinnegarMethod:
 
     def forward(N, s):
         """
-        Forward function calls the Cshared library for the diags function to create a diagonal
+        Forward function calls the Cshared library for the diags function to create a diagonal \
         sparse matrix.
         
         :param N: length of component array "x"
@@ -68,16 +68,16 @@ class PinnegarMethod:
 
     def pinnegar(data, s=100):
         """
-        Obtaining semi major, semi minor, inclination (dip), pitch (omega), phase (phi) and strike (ohm) by implementing
-        the method designed by C. R. Pinnegar.
+        Obtaining semi major, semi minor, inclination (dip), pitch (omega), phase (phi) and strike (ohm) by implementing \
+        the method designed by C. R. Pinnegar. \
         Signal in Z, R, T orientation.
 
-        :param data: three component signal data.
+        :parameter data: three component signal data.
         :type data: array   
-        :param s: default value is 100.
+        :parameter s: default value is 100.
         :type s: int
-        :returns: numpy array with semi major, numpy array with semi minor, numpy array with dip, 
-        numpy array with pitch, numpy array with phase and a base64 encoded string of bytes containing the previous 
+        :return: numpy array with semi major, numpy array with semi minor, numpy array with dip, \
+        numpy array with pitch, numpy array with phase and a base64 encoded string of bytes containing the previous \
         arrays plots.
         """
         sig = data
@@ -163,4 +163,3 @@ class PinnegarMethod:
         print("Time of execution", time.time()-start_time)
 
         return smajor, sminor, inclin, omega, phi, ohm, b64jpgdata
-

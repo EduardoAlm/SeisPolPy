@@ -14,25 +14,25 @@ import time
 start_time = time.time()
 import io
 import base64
-import mat4py
 
 class FlinnMethod:
 
 
     def flinn(data, window_size):
         """
-        Obtaining rectilinearity and direction of particle motion in a three component signal by 
-        implementing the method designed by E. A. Flinn.   
+        Obtaining rectilinearity and direction of particle motion in a three component signal by \
+        implementing the method designed by E. A. Flinn. \
         Signal in Z, R, T orientation. 
 
-        :param data: Three component signal data.
+        :parameter data: Three component signal data.
         :type data: array   
-        :param window_size: Size for the window.
+        :parameter window_size: Size for the window.
         :type data: int
-        :returns: array with rectilinearity values, array with polarization direction of the z 
-        component, array with polarization direction of the r component, array with polarization 
-        direction of the t component and a base64 encoded string of bytes containing the previous 
+        :return: array with rectilinearity values, array with polarization direction of the z \
+        component, array with polarization direction of the r component, array with polarization \
+        direction of the t component and a base64 encoded string of bytes containing the previous \
         arrays plots.
+
         """
         sig = data
 

@@ -28,11 +28,11 @@ class RSTFRMethod:
         """
         Soft_threshholding function computes the threshholding to the data.
 
-        :param z: array obtained in the calling function
+        :parameter z: array obtained in the calling function
         :type z: array
-        :param T: array obtained in the calling function
+        :parameter T: array obtained in the calling function
         :type T: array
-        :returns: array with absolute values
+        :return: array with absolute values
         """
         az = np.abs(z)
         res = np.maximum(az-T, 0)/(np.maximum(az-T,0)+T)*z
@@ -42,10 +42,11 @@ class RSTFRMethod:
         """
         Cross function performs cross correlation.
 
-        :param x1: signal component array
+        :parameter x1: signal component array
         :type x1: array
-        :param x2: signal component array
+        :parameter x2: signal component array
         :type x2: array
+        :return: numpy array
         """
         x = x1 * np.conj(x2)
         length = len(x1)
@@ -60,13 +61,13 @@ class RSTFRMethod:
         """
         Semi major/minor function which calls the cross coorelation function and performs eigen decomposition.
 
-        :param t: numpy array regarding the t signal component.
+        :parameter t: numpy array regarding the t signal component.
         :type t: array
-        :param r: numpy array regarding the r signal component.
+        :parameter r: numpy array regarding the r signal component.
         :type r: array
-        :param z: numpy array regarding the z signal component.
+        :parameter z: numpy array regarding the z signal component.
         :type z: array
-        :returns: numpy array semi, major, minor, major_norm, minor_norm
+        :return: numpy array semi, major, minor, major_norm, minor_norm
         """
         length = len(t)
         half = math.ceil(length/2)
@@ -96,14 +97,14 @@ class RSTFRMethod:
 
     def forward(N, s):
         """
-        Forward function calls the Cshared library for the diags function to create a diagonal
+        Forward function calls the Cshared library for the diags function to create a diagonal \
         sparse matrix.
         
-        :param N: length of component array "x"
+        :parameter N: length of component array "x"
         :type N: int
-        :param s: with default value of S equal to 100.
+        :parameter s: with default value of S equal to 100.
         :type s: int
-        :returns: scipy sparse dia matrix. 
+        :return: scipy sparse dia matrix. 
         """
         id = np.linspace(0, N-1, N, dtype="int32")
         w = np.zeros([N, N], dtype=DTYPE)
@@ -124,23 +125,23 @@ class RSTFRMethod:
 
     def stft_s_ist(x, y, z, s, n_it, mu):
         """
-        Sparse STFT function which calls the forward function, the Cshared library for the adjoint function 
+        Sparse STFT function which calls the forward function, the Cshared library for the adjoint function \
         and forward operator function, and soft threshholding function.
 
-        :param x: numpy array regarding the r signal component.
+        :parameter x: numpy array regarding the r signal component.
         :type x: array
-        :param y: numpy array regarding the t signal component.
+        :parameter y: numpy array regarding the t signal component.
         :type y: array
-        :param z: numpy array regarding the z signal component.
+        :parameter z: numpy array regarding the z signal component.
         :type z: array
-        :param s: with default value of S equal to 100.
+        :parameter s: with default value of S equal to 100.
         :type s: int 
-        :param n_it: default value is 400, corresponds to the number of iterations for the softthreshholding. 
+        :parameter n_it: default value is 400, corresponds to the number of iterations for the softthreshholding. \
         This variable is not used if the chosen method is the normal STFT.
         :type n_it: int 
-        :param mu: variable with the mu value of 1e-3.
+        :parameter mu: variable with the mu value of 1e-3.
         :type mu: int
-        :returns: three data arrays corresponding to each component of the signal, after applying the 
+        :return: three data arrays corresponding to each component of the signal, after applying the \
         sparse STFT. 
         """
         N = len(x)
@@ -170,11 +171,11 @@ class RSTFRMethod:
         """
         STFT function which calls the forward function and the Cshared library for the adjoint function.
 
-        :param x: numpy array regarding one the signal components.
+        :parameter x: numpy array regarding one the signal components.
         :type x: array
-        :param s: with default value of S equal to 100.
+        :parameter s: with default value of S equal to 100.
         :type s: int
-        :returns: component data array after applying the STFT.  
+        :return: component data array after applying the STFT.  
         """
         N = len(x)
         G = RSTFRMethod.forward(N, s)
@@ -185,19 +186,19 @@ class RSTFRMethod:
 
     def rstfr(data, s=100, n_it=400):
         """
-        Obtaining semi major, semi minor by implementing an adaptation of pinnegar method which 
-        takes advantage of sparsity this method allows for the choice between the normal STFT (Pinnegar Method) 
-        and the use of STFT with Sparsity Matrices.
+        Obtaining semi major, semi minor by implementing an adaptation of pinnegar method which \
+        takes advantage of sparsity this method allows for the choice between the normal STFT (Pinnegar Method) \
+        and the use of STFT with Sparsity Matrices. \
         Signal in Z, R, T orientation.
 
-        :param data: Three component signal data.
+        :parameter data: Three component signal data.
         :type data: array  
-        :param s: default value is 100.
+        :parameter s: default value is 100.
         :type s: int
-        :param n_it: default value is 400, corresponds to the number of iterations for the softthreshholding. 
+        :parameter n_it: default value is 400, corresponds to the number of iterations for the softthreshholding. \
         This variable is not used if the chosen method is the normal STFT.
         :type n_it: int 
-        :returns: numpy array with semi major, numpy array with semi minor and a base64 encoded string of 
+        :return: numpy array with semi major, numpy array with semi minor and a base64 encoded string of \
         bytes containing the previous arrays plots.
         """
 
