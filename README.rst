@@ -2,6 +2,8 @@
 SeisPolPy
 =========
 
+.. image:: /docs/source/img/banner_git
+
 Overview
 --------
 
