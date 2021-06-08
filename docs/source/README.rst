@@ -11,18 +11,46 @@ So far, SeisPolPy provides three, well known, methods that allow the extraction 
 
 SeisPolPy main objective is to empower its users with **reliable and efficient methods** to make the task of processing seismic time series more straightforward. 
 
+
 Installation
 ------------
 
 SeisPolPy is currently running and tested on Linux (32 and 64 bit) with Python 3.8. 
 
-For installing the package just run::
+PyPI
+^^^^
+
+For installing the package through PyPI just run::
 
     pip3 install SeisPolPy
 
-After finishing the library installation, please download the folder **sharedClib**, `here <https://github.com/EduardoAlm/SeisPolPy/tree/main/sharedClib>`_ present, 
-and place the *.so* files in the folder where the SeisPolPy functions are being imported.
-For due to the complexity associated with matrices operations this project requires the use o Cython created shared libraries to improve its efficiency. 
+or::
+
+    python3 -m pip install SeisPolPy
+
+Building and Installing
+^^^^^^^^^^^^^^^^^^^^^^^
+
+To build the SeisPolPy library, in the root folder, run::
+
+    python3 -m build
+
+which will generate the .whl and .tar.gz files and place them inside the folder **dist**.
+Having generated these files, still in the **root** folder, run::
+
+    pip3 install dist/SeisPolPy-**replacewithcurrentversion**-py3-none-any.whl
+
+or::
+
+    pip3 install dist/SeisPolPy-**replacewithcurrentversion**.tar.gz
+
+.. note::
+    After finishing the library installation, please download the folder **sharedClib**, `here <https://github.com/EduardoAlm/SeisPolPy/tree/main/sharedClib>`_ present, 
+    and place the .so files in the folder where the SeisPolPy functions are being imported. These were created with the Cython package to improve the code efficiency, which was necessary, due to the high complexity present in the matrices operations performed in some of the implemented methods.
+
+.. note::
+    SeisPolPy is not yet available at PyPI. The library will only be uploaded upon it's release.
+
 
 Example
 -------
