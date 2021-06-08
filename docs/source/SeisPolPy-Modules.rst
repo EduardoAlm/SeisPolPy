@@ -12,10 +12,11 @@ SeisPolPy.Flinn module
    :undoc-members:
    :show-inheritance:
 
-SeisPolPy.Pinnegar module
--------------------------
 
-.. automodule:: SeisPolPy.Pinnegar
+SeisPolPy.Vidale module
+-----------------------
+
+.. automodule:: SeisPolPy.Vidale
    :members:
    :undoc-members:
    :show-inheritance:
