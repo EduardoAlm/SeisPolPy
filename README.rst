@@ -1,6 +1,3 @@
-=========
-SeisPolPy
-=========
 
 .. image:: /docs/source/img/banner_git.png
     :height: 640px
