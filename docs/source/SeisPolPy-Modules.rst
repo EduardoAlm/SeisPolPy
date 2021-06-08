@@ -27,13 +27,4 @@ SeisPolPy.Rstfrmodule
    :members:
    :undoc-members:
    :show-inheritance:
-
-SeisPolPy.Vidale module
------------------------
-
-.. automodule:: SeisPolPy.Vidale
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-
+   
