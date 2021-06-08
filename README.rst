@@ -3,7 +3,9 @@ SeisPolPy
 =========
 
 .. image:: /docs/source/img/banner_git.png
-
+    :height: 640px
+    :width: 1280 px
+    :align: center
 Overview
 --------
 
