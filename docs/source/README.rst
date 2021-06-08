@@ -5,8 +5,7 @@ SeisPolPy
 Overview
 --------
 
-SeisPolPy is an open-source project which aims to provide a 
-**Python library for processing seismic time series**. 
+SeisPolPy is an open-source project which aims to provide a **Python library for processing seismic time series**. 
 So far, SeisPolPy provides three, well known, methods that allow the extraction of relevant information from the seismological time series (see [CIT1975]_, [CIT1986]_, [CIT2006]_), as well as a new method developed by the authors. This latter method (RSTFR) consists of an adaptation of already existing methods and improves them by presenting the option of taking advantage of sparsity to process the data.
 
 SeisPolPy main objective is to empower its users with **reliable and efficient methods** to make the task of processing seismic time series more straightforward. 

@@ -5,4 +5,4 @@ import numpy as np
 
 data = mat4py.loadmat('examples/ACRG.mat') # seismic data
 sig = np.array([data['t'], data['r'], data['z']])
-SeisPolPy.Flinn.flinn(sig, 50)
+SeisPolPy.Pinnegar.pinnegar(sig)
