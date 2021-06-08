@@ -21,4 +21,4 @@ Indices and tables
 
 Click in the button bellow to download the author MsC thesis that resulted from the development of this library. 
 
-:download:`pdf <>`
+(**Still being written, will be available soon!**)

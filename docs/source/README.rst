@@ -27,16 +27,14 @@ For due to the complexity associated with matrices operations this project requi
 Example
 -------
 
-Documentation and Changelog
----------------------------
+Changelog
+---------
 
 The changelog is presented below:
 
 .. changelog::
     :changelog-url: https://seispolpy.readthedocs.io/en/latest/#changelog
     :github: https://github.com/EduardoAlm/SeisPolPy/releases/
-    
-The documentation can be found at `SeisPolPydocs <https://seispolpy.readthedocs.io/en/latest/>`_.
 
 Contribution
 ------------
