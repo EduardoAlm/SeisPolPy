@@ -45,8 +45,7 @@ or::
 
 .. note::
     After finishing the library installation, please download the folder **sharedClib**, `here <https://github.com/EduardoAlm/SeisPolPy/tree/main/sharedClib>`_ present, 
-    and place the .so files in the folder where the SeisPolPy functions are being imported. These were created with the Cython package to improve the code efficiency, which was necessary
-     due to the high complexity present in the matrices operations performed in some of the implemented methods.
+    and place the .so files in the folder where the SeisPolPy functions are being imported. These were created with the Cython package to improve the code efficiency, which was necessary, due to the high complexity present in the matrices operations performed in some of the implemented methods.
 
 .. note::
     SeisPolPy is not yet available at PyPI. The library will only be uploaded upon it's release.
