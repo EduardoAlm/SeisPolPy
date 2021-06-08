@@ -2,7 +2,7 @@
 SeisPolPy
 =========
 
-.. image:: /docs/source/img/banner_git
+.. image:: /docs/source/img/banner_git.png
 
 Overview
 --------
