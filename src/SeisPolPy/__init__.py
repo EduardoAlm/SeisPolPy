@@ -1,0 +1,1 @@
+from SeisPolPy import Flinn

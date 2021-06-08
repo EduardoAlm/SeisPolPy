@@ -18,7 +18,6 @@ Indices and tables
 
 * :ref:`genindex`
 * :ref:`modindex`
-* :ref:`search`
 
 Click in the button bellow to download the author MsC thesis that resulted from the development of this library. 
 
