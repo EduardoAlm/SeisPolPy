@@ -35,7 +35,11 @@ release = '0.1.0'
 extensions = ['sphinx.ext.autodoc', 'sphinx.ext.napoleon', 'sphinx_github_changelog'
 ]
 
+<<<<<<< HEAD
 sphinx_github_changelog_token = os.environ.get('CHANGELOGTOKEN')
+=======
+sphinx_github_changelog_token = os.environ.get('changelog_token')
+>>>>>>> main
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
