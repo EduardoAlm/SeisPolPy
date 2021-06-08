@@ -1,3 +1,5 @@
+:orphan:
+
 =========
 SeisPolPy
 =========
@@ -30,13 +32,7 @@ Example
 Documentation and Changelog
 ---------------------------
 
-The changelog is presented below:
-
-.. changelog::
-    :changelog-url: https://seispolpy.readthedocs.io/en/latest/#changelog
-    :github: https://github.com/EduardoAlm/SeisPolPy/releases/
-    
-The documentation can be found at `SeisPolPydocs <https://seispolpy.readthedocs.io/en/latest/>`_.
+Both the documentation and changelog can be found at `SeisPolPydocs <https://seispolpy.readthedocs.io/en/latest/>`_.
 
 Contribution
 ------------

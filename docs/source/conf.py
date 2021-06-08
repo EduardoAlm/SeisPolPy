@@ -34,7 +34,7 @@ release = '0.1.0'
 extensions = ['sphinx.ext.autodoc', 'sphinx.ext.napoleon', 'sphinx_github_changelog'
 ]
 
-sphinx_github_changelog_token = "..."
+sphinx_github_changelog_token = "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"
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
@@ -70,7 +70,7 @@ html_context = {
     'display_github': True,    
     'github_user': 'EduardoAlm',
     'github_repo': 'SeisPolPy',
-    'github_version': '' 
+    'github_version': '0.0.1' 
 }
 
 # Add any paths that contain custom static files (such as style sheets) here,
