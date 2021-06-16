@@ -85,26 +85,6 @@ def flinn(data, window_size):
     g2_z = np.vstack((np.zeros((len(window), 1)), g2_z)) 
     g2_r = np.vstack((np.zeros((len(window), 1)), g2_r))
     g2_t = np.vstack((np.zeros((len(window), 1)), g2_t))
-    
-
-    fig, axs = plt.subplots(3, 1)
-    plt.sca(axs[0])
-    plt.plot(z, color='r', linewidth=1.5, label='z')
-    plt.title("z - original")
-    plt.xlabel('Time (s)')
-    plt.ylabel('Amplitude')
-
-    plt.sca(axs[1])
-    plt.plot(r, color='c', linewidth=1.5, label='r')
-    plt.title("r - original")
-    plt.xlabel('Time (s)')
-    plt.ylabel('Amplitude')
-
-    plt.sca(axs[2])
-    plt.plot(t, color='k', linewidth=1.5, label='t')
-    plt.title("t - original")
-    plt.xlabel('Time (s)')
-    plt.ylabel('Amplitude')
 
     fig, axs = plt.subplots(4, 1)
     plt.sca(axs[0])
@@ -134,12 +114,9 @@ def flinn(data, window_size):
     StringIObytes = io.BytesIO()
     fig.tight_layout()
     plt.savefig(StringIObytes, format='jpg')
-    
-    plt.show()
-    
     StringIObytes.seek(0)
     b64jpgdata = base64.b64encode(StringIObytes.read()).decode()
-
+    plt.close()
     print("Execution time:", time.time()-start_time)
 
-    return b64jpgdata#g1, g2_z, g2_r, g2_t, b64jpgdata
+    return b64jpgdata #g1, g2_z, g2_r, g2_t, b64jpgdata

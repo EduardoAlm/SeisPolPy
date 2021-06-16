@@ -21,7 +21,7 @@ import base64
 def vidale(data, window_size):
     """
     Obtaining the elliptical component of polarization, strike, inclination (dip), \
-    polarization strenght of the signal and the degree of planar polarization by implementing \
+    polarization strength of the signal and the degree of planar polarization by implementing \
     the method designed by John E. Vidale. \
     Signal in Z, R, T orientation.
 
@@ -95,25 +95,6 @@ def vidale(data, window_size):
         # but Pp is near 0 if the intermediate and smallest components of polarization are comparable.
         degree_planar_pol[i] = 1. - (eig_values[1] / eig_values[0])
 
-    fig, axs = plt.subplots(3, 1)
-    
-    plt.sca(axs[0])
-    plt.plot(sig[2], color='r', linewidth=1.5, label='z')
-    plt.title("z - original")
-    plt.xlabel('Time (s)')
-    plt.ylabel('Amplitude')
-
-    plt.sca(axs[1])
-    plt.plot(sig[1], color='c', linewidth=1.5, label='r')
-    plt.title("r - original")
-    plt.xlabel('Time (s)')
-    plt.ylabel('Amplitude')
-
-    plt.sca(axs[2])
-    plt.plot(sig[0], color='k', linewidth=1.5, label='t')
-    plt.title("t - original")
-    plt.xlabel('Time (s)')
-    plt.ylabel('Amplitude')
 
     fig, axs = plt.subplots(3, 1)
 
@@ -135,6 +116,15 @@ def vidale(data, window_size):
     plt.xlabel('Time (s)')
     #plt.ylabel('1 and 0 for circularly/linearly polarized motion')
 
+    StringIObytes1 = io.BytesIO()
+    fig.tight_layout()
+    plt.savefig(StringIObytes1, format='jpg')
+
+    StringIObytes1.seek(0)
+    b64jpgdata1 = base64.b64encode(StringIObytes1.read()).decode()
+    plt.show()
+    plt.close()
+
     fig, axs = plt.subplots(2, 1)
 
     plt.sca(axs[0])
@@ -149,14 +139,14 @@ def vidale(data, window_size):
     plt.xlabel('Time (s)')
     #plt.ylabel('Pp = 1 - the intermediate component of polarization is much larger than the smallest component, Pp =/- 0 - the intermediate and smallest components of polarization are comparable.')
 
-    StringIObytes = io.BytesIO()
+    StringIObytes2 = io.BytesIO()
     fig.tight_layout()
-    plt.savefig(StringIObytes, format='jpg')
+    plt.savefig(StringIObytes2, format='jpg')
+    StringIObytes2.seek(0)
+    b64jpgdata2 = base64.b64encode(StringIObytes2.read()).decode()
     plt.show()
-
-    StringIObytes.seek(0)
-    b64jpgdata = base64.b64encode(StringIObytes.read()).decode()
-
+    plt.close()
+    
     print("Execution time:", time.time()-start_time)
 
-    return elliptical_pol, strike, dip, pol_strength, degree_planar_pol, b64jpgdata
+    return b64jpgdata1, b64jpgdata2 #elliptical_pol, strike, dip, pol_strength, degree_planar_pol, 
