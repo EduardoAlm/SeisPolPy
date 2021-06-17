@@ -70,6 +70,10 @@ def semimm(t, r, z):
     length = len(t)
     half = math.ceil(length/2)
     semi = np.zeros((12, half))
+    eigvec1 = np.zeros((half, 3))
+    eigvec2 = np.zeros((half, 3))
+    eigvec3 = np.zeros((half, 3))
+    eigvalues = np.zeros((half, 3))
     major = np.zeros((3, half))
     minor = np.zeros((3, half))
     tt = cross(t, t).astype(np.float64)
@@ -82,8 +86,8 @@ def semimm(t, r, z):
     for i in range(half):
         cov_matrix = np.array([[tt[i], tr[i], tz[i]],[tr[i], rr[i], rz[i]],[tz[i],rz[i], zz[i]]], dtype='float64')
         eig_values, V = np.linalg.eigh(cov_matrix)
-        V = np.transpose(V)
-
+        #V = np.transpose(V)
+        eig_values = np.real(eig_values)
         semi[0:3, i] = V[:, 2]
         semi[3:6, i] = V[:, 1]
         semi[6:9, i] = V[:, 0]
@@ -165,7 +169,6 @@ def stft_s_ist(x, y, z, s, n_it, mu):
         d1 = d1 + (dh1 - np.real(forw_op.forw_o(G, N, tfx)))
         d2 = d2 + (dh2 - np.real(forw_op.forw_o(G, N, tfy)))
         d3 = d3 + (dh3 - np.real(forw_op.forw_o(G, N, tfz)))
-        #print("Forward/Backward splitting and threshholding... ", np.round(i*100/N, 2), "%")
     
     return np.reshape(tfx, (N, N)), np.reshape(tfy, (N, N)), np.reshape(tfz, (N, N))
 
@@ -185,10 +188,116 @@ def stft(x, s):
 
     return np.reshape(tfx,(N, N))
 
-
-def rstfr(data, alg="stft", s=100, n_it=400):
+def amplitude(zeta, eta, eig_values):
     """
-    Obtaining semi major, semi minor by implementing an adaptation of pinnegar method which \
+    Creates the amplitude filter.
+
+    :parameter zeta: default value is 0.26. Amplitude filter adjusting parameter.
+    :type zeta: float
+    :parameter eta: default value is 0.23. Amplitude filter adjusting parameter.
+    :type eta: float
+    :parameter eig_values: array containing all the eigenvalues for the given signal.
+    :type eig_values: array
+    :return: array containing the obtained directivity values. 
+    """
+    
+    amp = eig_values[2]
+    if amp >= 0 and amp < zeta:
+        ampli = 0.
+    elif amp > zeta and amp < eta:
+        ampli = math.cos(math.pi*(amp-zeta)/2*(eta-zeta))
+    elif amp > eta and amp <= 1:
+        ampli = 1.
+    else:
+        raise Exception("Amplitude out of bounds when aplying the rectilinearity filter.")
+    return ampli
+
+def directivity_love(gamma, lamb_da, eig_vec3):
+    """
+    Creates the directivity filter for love waves.
+
+    :parameter gamma: default value is 0.25. Directivity filter adjusting parameter.
+    :type alpha: float
+    :parameter beta: default value is 0.3. Directivity filter adjusting parameter.
+    :type beta: float
+    :parameter eig_vec3: array containing all the biggest eigenvectors for the given signal.
+    :type eig_vec3: array
+    :return: the obtained directivity value for the love wave. 
+    """
+    print("dir_love")
+    b_vec=np.array([[1,0,0],[0,1,0],[0,0,1]], np.int)
+
+    degree_res = np.max(np.abs(np.dot(eig_vec3[2], b_vec[0]))) 
+    degree_dir = float("{:.2f}".format(round(degree_res, 2)))      
+    if degree_dir >= -1 and degree_dir < gamma:
+        degree_res_dir = 1.
+    elif degree_dir > gamma and degree_dir < lamb_da:
+        degree_res_dir = math.cos(math.pi*(degree_dir-gamma)/2*(lamb_da-gamma))
+    elif degree_dir > lamb_da and degree_dir <= 1:
+        degree_res_dir = 0.
+    else:
+        raise Exception("Degree directivity out of bounds when aplying the directionality filter.")
+
+    return degree_res_dir
+
+def directivity_rayleigh(gamma, lamb_da, eig_vec3):
+    """
+    Creates the directivity filter for raileigh waves.
+
+    :parameter gamma: default value is 0.25. Directivity filter adjusting parameter.
+    :type alpha: float
+    :parameter beta: default value is 0.3. Directivity filter adjusting parameter.
+    :type beta: float
+    :parameter eig_vec3: array containing all the biggest eigenvectors for the given signal.
+    :type eig_vec3: array
+    :return: array containing the obtained directivity values for the rayleigh wave. 
+    """
+    print("dir_ray")
+    b_vec = np.array([[1,0,0],[0,1,0],[0,0,1]], np.int)
+
+    radial = np.max(np.abs(np.dot(eig_vec3, b_vec[1])))
+    z = np.max(np.abs(np.dot(eig_vec3, b_vec[2])))
+    degree_res = math.sqrt(radial+z)         
+    degree_dir = float("{:.2f}".format(round(degree_res, 2)))
+    if degree_dir >= -1 and degree_dir < gamma:
+        degree_res_dir = 1.
+    elif degree_dir > gamma and degree_dir < lamb_da:
+        degree_res_dir = math.cos(math.pi*(degree_dir-gamma)/2*(lamb_da-gamma))
+    elif degree_dir > lamb_da and degree_dir <= 1:
+        degree_res_dir = 0.
+    else:
+        raise Exception("Degree directivity out of bounds when aplying the directionality filter.")
+    return degree_res_dir
+
+def rectilinearity(alpha, beta, eig_values):
+    """
+    Creates the rectilinearity filter.
+
+    :parameter alpha: default value is 0.1. Rectilinearity filter adjusting parameter.
+    :type alpha: float
+    :parameter beta: default value is 0.12. Rectilinearity filter adjusting parameter.
+    :type beta: float
+    :parameter eig_values: array containing all the eigenvalues for the given signal.
+    :type eig_values: array
+    :return: array containing the obtained rectilinearity values. 
+    """
+    print("dir_rec")
+    degree_res = 1-((eig_values[1]+eig_values[0])/eig_values[2])
+    degree_rec = float("{:.2f}".format(round(degree_res, 2)))
+    if degree_rec >= -1 and degree_rec < alpha:
+        rec = 1.
+    elif degree_rec > alpha and degree_rec < beta:
+        rec = math.cos(math.pi*(degree_rec-alpha)/2*(beta-alpha))
+    elif degree_rec > beta and degree_rec <= 1:
+        rec = 0.
+    else:
+        raise Exception("Degree rectilinearity out of bounds when aplying the rectilinearity filter.")
+
+    return rec
+
+def rstfr(data, alg="stft",filt="love", s=100, n_it=400, alpha=0.1, beta=0.12, gamma=0.25, lamb_da=0.3, zeta=0.26, eta=0.23):
+    """
+    Obtains semi major, semi minor by implementing an adaptation of pinnegar method which \
     takes advantage of sparsity this method allows for the choice between the normal STFT (Pinnegar Method) \
     and the use of STFT with Sparsity Matrices. \
     Signal in Z, R, T orientation.
@@ -197,8 +306,25 @@ def rstfr(data, alg="stft", s=100, n_it=400):
     :type data: array  
     :parameter alg: default value is "stft", corresponds to choosing the method STFT. The other option \
         is to give as input "s_stft", which indicates that the chosen method is the sparse STFT.
+    :parameter filt: default values is "love", corresponds to choosing the type of waves to be filtered, Love \
+        or Rayleigh waves, with the available options of "love" and "rayleigh".
+    :type filt:
     :parameter s: default value is 100.
     :type s: int
+    :parameter n_it: default value is 400, corresponds to the number of iterations for the softthreshholding. \
+        This variable is not used if the chosen method is the normal STFT.
+    :parameter alpha: default value is 0.1. Rectilinearity filter adjusting parameter.
+    :type alpha: int
+    :parameter beta: default value is 0.12. Rectilinearity filter adjusting parameter.
+    :type beta: int
+    :parameter gamma: default value is 0.25. Directivity filter adjusting parameter.
+    :type gamma: int
+    :parameter lamb_da: default value is 0.3. Directivity filter adjusting parameter.
+    :type lamb_da: int
+    :parameter zeta: default value is 0.26. Amplitude filter adjusting parameter.
+    :type zeta: int
+    :parameter eta: default value is 0.23. Amplitude filter adjusting parameter.
+    :type eta: int
     :parameter n_it: default value is 400, corresponds to the number of iterations for the softthreshholding. \
         This variable is not used if the chosen method is the normal STFT.
     :type n_it: int 
@@ -236,14 +362,51 @@ def rstfr(data, alg="stft", s=100, n_it=400):
         semi[:,:,i], majo[:,:,i], mino[:,:,i], majon[:,:,i], minon[:,:,i] = semimm(np.multiply(10, tfry[:,i]),\
             np.multiply(10, tfrx[:,i]),np.multiply(10, tfrz[:,i]))
         #print("Generating the semi major/minor ... ",np.round(i*100/N, 2), "%")
-
+    print(semi[0][0,0])
+    n2 = len(semi[0, 0]) #last part
+    n = len(semi[0]) #middle part
+    
     majornorm, minornorm = np.zeros((nf, N)), np.zeros((nf, N))
+    """
+    fig, axs = plt.subplots(3, 1)
 
+    plt.sca(axs[0])
+    plt.plot(dip, color='k', linewidth=1.5, label='dip')
+    plt.title("Dip")
+    plt.xlabel('Time (s)')
+    """
+    rec_filter = np.array((n, n2), np.float16)
+    amp_filter = np.array((n, n2), np.float16)
+    dir_love_filter = np.array((n, n2), np.float16)
+    dir_rayleigh_filter = np.array((n, n2), np.float16)
+    for i in range(n):
+        for j in range(n2):
+            eig_values = np.array([semi[9][0,0],semi[10][0,0],semi[11][0,0]])
+            biggesteig_vec=np.array([semi[6][0,0],semi[7][0,0], semi[8][0,0]])        
+            rec_filter = rectilinearity(alpha, beta, eig_values)
+            amp_filter = amplitude(zeta, eta, eig_values)
+
+            if filt=="love":
+                dir_love_filter = directivity_love(gamma, lamb_da, biggesteig_vec)
+            elif filt=="rayleigh":
+                dir_rayleigh_filter = directivity_rayleigh(gamma, lamb_da, biggesteig_vec)
+            else:
+                raise Exception("The chosen options is not available please check the documentation.")
+    if filt=="love":
+        rej_love_filter = 1 - np.multiply((1 - rec_filter), (1 - dir_love_filter), (1 - amp_filter))
+        ext_love_filter = np.multiply((1 - rec_filter), (1 - dir_love_filter), (1 - amp_filter))
+    elif filt=="rayleigh":
+        rej_rayleigh_filter = 1 - np.multiply((1 - rec_filter), (1 - dir_rayleigh_filter), (1 - amp_filter))
+        ext_rayleigh_filter = np.multiply((1 - rec_filter), (1 - dir_rayleigh_filter), (1 - amp_filter))
+    else:
+        raise Exception("The chosen options is not available please check the documentation.")            
+    
+    
     for i in range(nf):
         for j in range(N):
             # Normalizes the semi major and minor values
             majornorm[i, j], minornorm[i, j] = np.sqrt(np.dot(majo[:, i, j],majo[:, i, j])), np.sqrt(np.dot(mino[:, i, j],mino[:, i, j]))
-        #print("Normalising the output values ... ",np.round(i*100/nf, 2), "%")
+        print("Normalising the output values ... ",np.round(i*100/nf, 2), "%")
 
     cax = np.max((np.max(majornorm), np.max(minornorm)))
     

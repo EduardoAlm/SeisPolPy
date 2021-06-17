@@ -31,7 +31,8 @@ st.detrend("spline", order=3, dspline=500)
 
 st.decimate(factor=4, strict_length=False)
 st.decimate(factor=4, strict_length=False)
-st.decimate(factor=2, strict_length=False)
+st.decimate(factor=4, strict_length=False)
+st.decimate(factor=4, strict_length=False)
 starttime = st[0].stats.starttime+60*15
 print(starttime)
 endtime = st[0].stats.starttime+60*110
@@ -43,7 +44,7 @@ z = st.traces[0].data
 print(len(z))
 r = st.traces[1].data
 t = st.traces[2].data
-name = "examples/data" + sta + "vm.mat"
+name = "examples/data" + sta + "testspstft.mat"
 scipy.io.savemat(name, dict(t=t, r=r, z=z))
 ######## Real
 # t = st.traces[0].data

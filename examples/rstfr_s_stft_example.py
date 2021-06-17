@@ -1,4 +1,4 @@
-import SeisPolPy
+from Rstfr2 import rstfr
 import mat4py
 import numpy as np
 import matplotlib.pyplot as plt
@@ -6,9 +6,9 @@ import base64
 import io
 import matplotlib.image as mpimg
 
-data = mat4py.loadmat('examples/ACRG.mat') # seismic data
+data = mat4py.loadmat('examples/dataII.ABKTtestspstft.mat') # seismic data
 sig = np.array([data['t'], data['r'], data['z']])
-b64dataM, b64datam = SeisPolPy.Rstfr.rstfr(sig, "s_stft")
+b64dataM, b64datam = rstfr(sig, "s_stft", "love", 100, 400, 0.1, 0.12, 0.13, 0.26, 0.26, 0.23)
 
 f = open("examples/outputRstfrB64_S_STFTMajor.txt", "w")
 f.write(b64dataM)
