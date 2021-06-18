@@ -70,10 +70,6 @@ def semimm(t, r, z):
     length = len(t)
     half = math.ceil(length/2)
     semi = np.zeros((12, half))
-    eigvec1 = np.zeros((half, 3))
-    eigvec2 = np.zeros((half, 3))
-    eigvec3 = np.zeros((half, 3))
-    eigvalues = np.zeros((half, 3))
     major = np.zeros((3, half))
     minor = np.zeros((3, half))
     tt = cross(t, t).astype(np.float64)
@@ -367,40 +363,6 @@ def rstfr(data, alg="stft",filt="love", s=100, n_it=400, alpha=0.1, beta=0.12, g
     n = len(semi[0]) #middle part
     
     majornorm, minornorm = np.zeros((nf, N)), np.zeros((nf, N))
-    """
-    fig, axs = plt.subplots(3, 1)
-
-    plt.sca(axs[0])
-    plt.plot(dip, color='k', linewidth=1.5, label='dip')
-    plt.title("Dip")
-    plt.xlabel('Time (s)')
-    """
-    rec_filter = np.array((n, n2), np.float16)
-    amp_filter = np.array((n, n2), np.float16)
-    dir_love_filter = np.array((n, n2), np.float16)
-    dir_rayleigh_filter = np.array((n, n2), np.float16)
-    for i in range(n):
-        for j in range(n2):
-            eig_values = np.array([semi[9][0,0],semi[10][0,0],semi[11][0,0]])
-            biggesteig_vec=np.array([semi[6][0,0],semi[7][0,0], semi[8][0,0]])        
-            rec_filter = rectilinearity(alpha, beta, eig_values)
-            amp_filter = amplitude(zeta, eta, eig_values)
-
-            if filt=="love":
-                dir_love_filter = directivity_love(gamma, lamb_da, biggesteig_vec)
-            elif filt=="rayleigh":
-                dir_rayleigh_filter = directivity_rayleigh(gamma, lamb_da, biggesteig_vec)
-            else:
-                raise Exception("The chosen options is not available please check the documentation.")
-    if filt=="love":
-        rej_love_filter = 1 - np.multiply((1 - rec_filter), (1 - dir_love_filter), (1 - amp_filter))
-        ext_love_filter = np.multiply((1 - rec_filter), (1 - dir_love_filter), (1 - amp_filter))
-    elif filt=="rayleigh":
-        rej_rayleigh_filter = 1 - np.multiply((1 - rec_filter), (1 - dir_rayleigh_filter), (1 - amp_filter))
-        ext_rayleigh_filter = np.multiply((1 - rec_filter), (1 - dir_rayleigh_filter), (1 - amp_filter))
-    else:
-        raise Exception("The chosen options is not available please check the documentation.")            
-    
     
     for i in range(nf):
         for j in range(N):
@@ -428,6 +390,79 @@ def rstfr(data, alg="stft",filt="love", s=100, n_it=400, alpha=0.1, beta=0.12, g
     StringIObytes2.seek(0)
     b64jpgdataMinor = base64.b64encode(StringIObytes2.read()).decode()
     plt.close()
+
+    """
+    x = np.arange(semi.shape[0])[:, None, None]
+    y = np.arange(semi.shape[1])[None, :, None]
+    z = np.arange(semi.shape[2])[None, None, :]
+    x, y, z = np.broadcast_arrays(x, y, z)
+    c = np.tile(semi.ravel()[:, None], [1, 3])
+
+    fig = plt.figure()
+    ax = fig.gca(projection='3d')
+    ax.scatter(x.ravel(), y.ravel(), z.ravel(), c=semi.ravel())
+    plt.show()
+    plt.close()
+    """
+    rec_filter = np.zeros((n2, n2), dtype=np.float16)
+    amp_filter = np.zeros((n2, n2), dtype=np.float16)
+    dir_love_filter = np.zeros((n2,n2), dtype=np.float16)
+    dir_rayleigh_filter = np.zeros((n2, n2), dtype=np.float16)
+    for i in range(n):
+        for j in range(n2):
+            eig_values = np.array([semi[9][0,0],semi[10][0,0],semi[11][0,0]])
+            biggesteig_vec=np.array([semi[6][0,0],semi[7][0,0], semi[8][0,0]])        
+            rec_filter[j, j] = rectilinearity(alpha, beta, eig_values)
+            amp_filter[j, j] = amplitude(zeta, eta, eig_values)
+
+            if filt=="love":
+                dir_love_filter[j, j] = directivity_love(gamma, lamb_da, biggesteig_vec)
+            elif filt=="rayleigh":
+                dir_rayleigh_filter[j, j] = directivity_rayleigh(gamma, lamb_da, biggesteig_vec)
+            else:
+                raise Exception("The chosen options is not available please check the documentation.")
+    if filt=="love":
+        rej_love_filter = 1 - np.multiply((1 - rec_filter), (1 - dir_love_filter), (1 - amp_filter))
+        ext_love_filter = np.multiply((1 - rec_filter), (1 - dir_love_filter), (1 - amp_filter))
+        rejected_x = np.dot(tfrx, rej_love_filter)
+        rejected_y = np.dot(tfry, rej_love_filter)
+        rejected_z = np.dot(tfrz, rej_love_filter)
+        extracted_x = np.dot(tfrx, ext_love_filter)
+        extracted_y = np.dot(tfry, ext_love_filter)
+        extracted_z = np.dot(tfrz, ext_love_filter)
+    elif filt=="rayleigh":
+        rej_rayleigh_filter = 1 - np.multiply((1 - rec_filter), (1 - dir_rayleigh_filter), (1 - amp_filter))
+        ext_rayleigh_filter = np.multiply((1 - rec_filter), (1 - dir_rayleigh_filter), (1 - amp_filter))
+        rejected_x = np.multiply(tfrx, rej_rayleigh_filter)
+        rejected_y = np.multiply(tfry, rej_rayleigh_filter)
+        rejected_z = np.multiply(tfrz, rej_rayleigh_filter)
+        extracted_x = np.multiply(tfrx, ext_rayleigh_filter)
+        extracted_y = np.multiply(tfry, ext_rayleigh_filter)
+        extracted_x = np.multiply(tfrz, ext_rayleigh_filter)
+    else:
+        raise Exception("The chosen options is not available please check the documentation.")            
+    
+    
+    plt.figure()
+    f, ax = plt.subplots(3,1) 
+    ax[0].imshow(tfrx)
+    ax[1].imshow(tfry)
+    ax[2].imshow(tfrz)
+    plt.title("stft_s_ist components")
+    f, ax2 = plt.subplots(3,1) 
+    ax2[0].imshow(rejected_x)
+    ax2[1].imshow(rejected_y)
+    ax2[2].imshow(rejected_z)
+    plt.title("rejection components")
+    plt.tight_layout()
+    f, ax3 = plt.subplots(3,1) 
+    ax3[0].imshow(extracted_x)
+    ax3[1].imshow(extracted_y)
+    ax3[2].imshow(extracted_z)
+    plt.title("extraction components")
+    plt.tight_layout()
+    plt.show()
+
     print("Execution time:", time.time()-start_time)
 
     return b64jpgdataMajor, b64jpgdataMinor # np.abs(majornorm), np.abs(minornorm), 
