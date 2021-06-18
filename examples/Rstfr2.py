@@ -444,25 +444,39 @@ def rstfr(data, alg="stft",filt="love", s=100, n_it=400, alpha=0.1, beta=0.12, g
     
     
     plt.figure()
-    f, ax = plt.subplots(3,1) 
-    ax[0].imshow(tfrx)
-    ax[1].imshow(tfry)
-    ax[2].imshow(tfrz)
-    plt.title("stft_s_ist components")
+   # f, ax = plt.subplots(3,1) 
+   # ax[0].imshow(tfrx)
+   # ax[1].imshow(tfry)
+   # ax[2].imshow(tfrz)
+   # plt.title("stft_s_ist components")
     f, ax2 = plt.subplots(3,1) 
     ax2[0].imshow(rejected_x)
     ax2[1].imshow(rejected_y)
     ax2[2].imshow(rejected_z)
     plt.title("rejection components")
     plt.tight_layout()
+    StringIObytes3 = io.BytesIO()
+    plt.savefig(StringIObytes3, format='jpg')
+  
+    StringIObytes3.seek(0)
+    b64jpgdataextraction = base64.b64encode(StringIObytes3.read()).decode()
+    plt.show()
+    plt.close()
     f, ax3 = plt.subplots(3,1) 
     ax3[0].imshow(extracted_x)
     ax3[1].imshow(extracted_y)
     ax3[2].imshow(extracted_z)
     plt.title("extraction components")
     plt.tight_layout()
+    StringIObytes4 = io.BytesIO()
+    plt.savefig(StringIObytes4, format='jpg')
+  
+    StringIObytes4.seek(0)
+    b64jpgdatarejection = base64.b64encode(StringIObytes4.read()).decode()
     plt.show()
+    plt.close()
+
 
     print("Execution time:", time.time()-start_time)
 
-    return b64jpgdataMajor, b64jpgdataMinor # np.abs(majornorm), np.abs(minornorm), 
+    return b64jpgdataMajor, b64jpgdataMinor, b64jpgdataextraction, b64jpgdatarejection

@@ -8,7 +8,7 @@ import matplotlib.image as mpimg
 
 data = mat4py.loadmat('examples/dataII.ABKTtestspstft.mat') # seismic data
 sig = np.array([data['t'], data['r'], data['z']])
-b64dataM, b64datam = rstfr(sig, "s_stft", "love", 100, 400, 0.1, 0.12, 0.13, 0.26, 0.26, 0.23)
+b64dataM, b64datam, b64dataext, b64datarej = rstfr(sig, "s_stft", "love", 100, 400, 0.1, 0.12, 0.13, 0.26, 0.26, 0.23)
 
 f = open("examples/outputRstfrB64_S_STFTMajor.txt", "w")
 f.write(b64dataM)
@@ -16,6 +16,13 @@ f.close()
 f1 = open("examples/outputRstfrB64_S_STFTMinor.txt", "w")
 f1.write(b64datam)
 f1.close()
+f2 = open("examples/outputRstfrB64_S_STFTextraction.txt", "w")
+f2.write(b64dataext)
+f2.close()
+f3 = open("examples/outputRstfrB64_S_STFTrejection.txt", "w")
+f3.write(b64datarej)
+f3.close()
+
 
 imageM = base64.b64decode(b64dataM)
 imageM = io.BytesIO(imageM)
@@ -25,6 +32,18 @@ plt.show()
 plt.close()
 
 imagem = base64.b64decode(b64datam)
+imagem = io.BytesIO(imagem)
+imagem = mpimg.imread(imagem, format='jpg')
+plt.imshow(imagem, interpolation='nearest')
+plt.show()
+
+imagem = base64.b64decode(b64datarej)
+imagem = io.BytesIO(imagem)
+imagem = mpimg.imread(imagem, format='jpg')
+plt.imshow(imagem, interpolation='nearest')
+plt.show()
+
+imagem = base64.b64decode(b64dataext)
 imagem = io.BytesIO(imagem)
 imagem = mpimg.imread(imagem, format='jpg')
 plt.imshow(imagem, interpolation='nearest')
