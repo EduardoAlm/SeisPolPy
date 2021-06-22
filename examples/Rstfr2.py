@@ -302,9 +302,10 @@ def rstfr(data, alg="stft",filt="love", s=100, n_it=400, alpha=0.1, beta=0.12, g
     :type data: array  
     :parameter alg: default value is "stft", corresponds to choosing the method STFT. The other option \
         is to give as input "s_stft", which indicates that the chosen method is the sparse STFT.
+    :type alg: 
     :parameter filt: default values is "love", corresponds to choosing the type of waves to be filtered, Love \
         or Rayleigh waves, with the available options of "love" and "rayleigh".
-    :type filt:
+    :type filt: string
     :parameter s: default value is 100.
     :type s: int
     :parameter n_it: default value is 400, corresponds to the number of iterations for the softthreshholding. \
@@ -324,7 +325,7 @@ def rstfr(data, alg="stft",filt="love", s=100, n_it=400, alpha=0.1, beta=0.12, g
     :parameter n_it: default value is 400, corresponds to the number of iterations for the softthreshholding. \
         This variable is not used if the chosen method is the normal STFT.
     :type n_it: int 
-    :return: numpy array with semi major, numpy array with semi minor and two base64 encoded strings of \
+    :return: numpy array with semi major, numpy array with semi minor, numpy array with the filtered data and two base64 encoded strings of \
         bytes containing the previous arrays plots.
     """
 
