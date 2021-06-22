@@ -225,7 +225,7 @@ def directivity_love(gamma, lamb_da, eig_vec3):
 
     degree_res = np.max(np.abs(np.dot(eig_vec3[2], b_vec[0]))) 
     degree_dir = float("{:.2f}".format(round(degree_res, 2)))      
-    if degree_dir >= -1 and degree_dir < gamma:
+    if degree_dir >= 0 and degree_dir < gamma:
         degree_res_dir = 1.
     elif degree_dir > gamma and degree_dir < lamb_da:
         degree_res_dir = math.cos(math.pi*(degree_dir-gamma)/2*(lamb_da-gamma))
@@ -255,7 +255,7 @@ def directivity_rayleigh(gamma, lamb_da, eig_vec3):
     z = np.max(np.abs(np.dot(eig_vec3, b_vec[2])))
     degree_res = math.sqrt(radial+z)         
     degree_dir = float("{:.2f}".format(round(degree_res, 2)))
-    if degree_dir >= -1 and degree_dir < gamma:
+    if degree_dir >= 0 and degree_dir < gamma:
         degree_res_dir = 1.
     elif degree_dir > gamma and degree_dir < lamb_da:
         degree_res_dir = math.cos(math.pi*(degree_dir-gamma)/2*(lamb_da-gamma))
