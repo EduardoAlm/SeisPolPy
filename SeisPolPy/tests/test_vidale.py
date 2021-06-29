@@ -9,7 +9,7 @@ import matplotlib.image as mpimg
 
 
 def test_vidale():
-    data = mat4py.loadmat('SeisPolPy/tests/ACRG.mat') # seismic data
+    data = mat4py.loadmat('SeisPolPy/tests/dataACRG.mat') # seismic data
     sig = np.array([data['t'], data['r'], data['z']])
     f1 = open("SeisPolPy/tests/outputb64files/outputVidaleB641.txt", "r+")
 

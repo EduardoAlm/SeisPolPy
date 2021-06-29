@@ -99,19 +99,19 @@ def vidale(data, window_size):
     fig, axs = plt.subplots(3, 1)
 
     plt.sca(axs[0])
-    plt.plot(dip, color='k', linewidth=1.5, label='dip')
+    plt.plot(dip, c='gray',linewidth=1.5, label='dip')
     plt.title("Dip")
     plt.xlabel('Time (s)')
     #plt.ylabel('0 ° dip - vector points horizontally in the direction back to the epicenter.')
 
     plt.sca(axs[1])
-    plt.plot(strike, color='k', linewidth=1.5, label='strike')
+    plt.plot(strike, c='gray',linewidth=1.5, label='strike')
     plt.title("Strike")
     plt.xlabel('Time (s)')
     #plt.ylabel('0 ° strike - vector points horizontally in the direction back to the epicenter')
 
     plt.sca(axs[2])
-    plt.plot(elliptical_pol, color='k', linewidth=1.5, label='Pe')
+    plt.plot(elliptical_pol,c='gray',linewidth=1.5, label='Pe')
     plt.title("Elliptical component of polarization (Pe)")
     plt.xlabel('Time (s)')
     #plt.ylabel('1 and 0 for circularly/linearly polarized motion')
@@ -128,13 +128,13 @@ def vidale(data, window_size):
     fig, axs = plt.subplots(2, 1)
 
     plt.sca(axs[0])
-    plt.plot(pol_strength, color='k', linewidth=1.5, label='Ps')
+    plt.plot(pol_strength, c='gray',linewidth=1.5, label='Ps')
     plt.title("Polarization strenght of the signal (Ps)")
     plt.xlabel('Time (s)')
     #plt.ylabel('Ps is near 1 = signal is completely polarized, Ps = 0 the largest component of polarization is only as big as the other two combined.')
 
     plt.sca(axs[1])
-    plt.plot(degree_planar_pol, color='k', linewidth=1.5, label='Pp')
+    plt.plot(degree_planar_pol,c='gray', linewidth=1.5, label='Pp')
     plt.title("Degree of planar polarization (Pp)")
     plt.xlabel('Time (s)')
     #plt.ylabel('Pp = 1 - the intermediate component of polarization is much larger than the smallest component, Pp =/- 0 - the intermediate and smallest components of polarization are comparable.')

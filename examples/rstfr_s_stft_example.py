@@ -6,7 +6,7 @@ import base64
 import io
 import matplotlib.image as mpimg
 
-data = mat4py.loadmat('dataII.ABKTtestspstft.mat') # seismic data
+data = mat4py.loadmat('dataACRG.mat') # seismic data
 sig = np.array([data['t'], data['r'], data['z']])
 b64dataM, b64datam, b64dataext, b64datarej = rstfr(sig, "s_stft", "love", 100, 400, 0.1, 0.12, 0.13, 0.26, 0.26, 0.23)
 
@@ -23,7 +23,7 @@ f3 = open("outputRstfrB64_S_STFTrejection.txt", "w")
 f3.write(b64datarej)
 f3.close()
 
-"""
+
 
 imageM = base64.b64decode(b64dataM)
 imageM = io.BytesIO(imageM)
@@ -50,7 +50,7 @@ imagem = io.BytesIO(imagem)
 imagem = mpimg.imread(imagem, format='jpg')
 plt.imshow(imagem, interpolation='nearest')
 plt.show()
-
+"""
 f = open("examples/outputRstfrB64_S_STFTextraction.txt", "r")
 f2 = open("examples/outputRstfrB64_S_STFTrejection.txt", "r")
 imagem = base64.b64decode(f.read())

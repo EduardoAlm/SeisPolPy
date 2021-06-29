@@ -6,7 +6,7 @@ import io
 import matplotlib.pyplot as plt
 import matplotlib.image as mpimg
 
-data = mat4py.loadmat('SeisPolPy/tests/ACRG.mat') # seismic data
+data = mat4py.loadmat('SeisPolPy/tests/dataACRG.mat') # seismic data
 sig = np.array([data['t'], data['r'], data['z']])
 
 def test_flinn():

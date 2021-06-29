@@ -88,25 +88,25 @@ def flinn(data, window_size):
 
     fig, axs = plt.subplots(4, 1)
     plt.sca(axs[0])
-    plt.plot(g1, color='c', linewidth=1.5, label='rec')
+    plt.plot(g1,c='gray', linewidth=1.5, label='rec')
     plt.title("Rectilinearity")
     plt.xlabel('Time (s)')
     plt.ylabel('Amplitude')
 
     plt.sca(axs[1])
-    plt.plot(g2_z, color='r', linewidth=1.5, label='z')
+    plt.plot(g2_z, c='gray', linewidth=1.5, label='z')
     plt.title("DIRECTION OF PARTICLE MOTION z")
     plt.xlabel('Time (s)')
     plt.ylabel('Amplitude')
 
     plt.sca(axs[2])
-    plt.plot(g2_r, color='c', linewidth=1.5, label='r')
+    plt.plot(g2_r, c='gray', linewidth=1.5, label='r')
     plt.title("DIRECTION OF PARTICLE MOTION r")
     plt.xlabel('Time (s)')
     plt.ylabel('Amplitude')
 
     plt.sca(axs[3])
-    plt.plot(g2_t, color='k', linewidth=1.5, label='t')
+    plt.plot(g2_t, c='gray', linewidth=1.5, label='t')
     plt.title("DIRECTION OF PARTICLE MOTION t")
     plt.xlabel('Time (s)')
     plt.ylabel('Amplitude')
@@ -116,6 +116,7 @@ def flinn(data, window_size):
     plt.savefig(StringIObytes, format='jpg')
     StringIObytes.seek(0)
     b64jpgdata = base64.b64encode(StringIObytes.read()).decode()
+    plt.show()
     plt.close()
     print("Execution time:", time.time()-start_time)
 

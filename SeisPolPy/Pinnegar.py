@@ -94,24 +94,23 @@ def pinnegar(data, s=100):
     plt.rcParams.update({'font.size': 18})
 
     length = len(sig[0])
-    half = math.ceil(length / 2)
-    half += 550 
+   
     # Obtaining the Short Time Fourier Transform for each component
-    tfrx = stft(sig[1][0:(half)], s)  # R component vector 
-    tfry = stft(sig[0][0:(half)], s)  # T component vector 
-    tfrz = stft(sig[2][0:(half)], s)  # Z component vector 
+    tfrx = stft(sig[1][0:(length)], s)  # R component vector 
+    tfry = stft(sig[0][0:(length)], s)  # T component vector 
+    tfrz = stft(sig[2][0:(length)], s)  # Z component vector 
 
-    sminor = np.zeros((len(tfrx), half))
-    smajor = np.zeros((len(tfrx), half))
-    inclin = np.zeros((len(tfrx), half))  
-    omega = np.zeros((len(tfrx), half))  
-    phi = np.zeros((len(tfrx), half))  
-    ohm = np.zeros((len(tfrx), half))  
-    omega0 = np.zeros((len(tfrx), half))
-    phi0 = np.zeros((len(tfrx), half))
+    sminor = np.zeros((len(tfrx), length))
+    smajor = np.zeros((len(tfrx), length))
+    inclin = np.zeros((len(tfrx), length))  
+    omega = np.zeros((len(tfrx), length))  
+    phi = np.zeros((len(tfrx), length))  
+    ohm = np.zeros((len(tfrx), length))  
+    omega0 = np.zeros((len(tfrx), length))
+    phi0 = np.zeros((len(tfrx), length))
 
-
-    for i in range(half):
+    i=0
+    while i < (length):
         X = tfrx[:,i]
         Y = tfry[:,i]
         Z = tfrz[:,i]
@@ -154,6 +153,7 @@ def pinnegar(data, s=100):
         ohm[:, i] = OHM  # strike (the azimuth of the ascending node)
         omega0[:, i] = w0
         phi0[:, i] = ph0
+        i+=1
 
     plt.matshow(np.abs(np.transpose(smajor[:][:,:])))
     plt.title("Semi Major")
@@ -162,6 +162,7 @@ def pinnegar(data, s=100):
     plt.savefig(StringIObytes1, format='jpg')
     StringIObytes1.seek(0)
     b64jpgdataM = base64.b64encode(StringIObytes1.read()).decode()
+    plt.show()
     plt.close()
 
     plt.matshow(np.abs(np.transpose(sminor[:][:,:])))
@@ -169,6 +170,7 @@ def pinnegar(data, s=100):
 
     StringIObytes2 = io.BytesIO()
     plt.savefig(StringIObytes2, format='jpg')
+    plt.show()
     plt.close()
     StringIObytes2.seek(0)
     b64jpgdatam = base64.b64encode(StringIObytes2.read()).decode()

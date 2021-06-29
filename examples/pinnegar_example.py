@@ -7,19 +7,19 @@ import io
 import matplotlib.image as mpimg
 import pyasdf
 
-ds = pyasdf.ASDFDataSet("examples/out_vm.h5")
-print(ds)
-print(ds.waveforms.list())
-data = ds.waveforms['II.ABKT'].synthetics
-sig = np.array([data.traces[0].data, data.traces[1].data, data.traces[2].data])
-#data = mat4py.loadmat('examples/ACRG.mat') # seismic data
-#sig = np.array([data['t'], data['r'], data['z']])
+#ds = pyasdf.ASDFDataSet("examples/out_vm.h5")
+#print(ds)
+#print(ds.waveforms.list())
+#data = ds.waveforms['II.ABKT'].synthetics
+#sig = np.array([data.traces[0].data, data.traces[1].data, data.traces[2].data])
+data = mat4py.loadmat('examples/dataACRG.mat') # seismic data
+sig = np.array([data['t'], data['r'], data['z']])
 b64dataM, b64datam = SeisPolPy.Pinnegar.pinnegar(sig)
 
-f = open("examples/outputPinnegarB64Major.txt", "w")
+f = open("examples/outputPinnegarB64Majoracrg.txt", "w")
 f.write(b64dataM)
 f.close()
-f1 = open("examples/outputPinnegarB64Minor.txt", "w")
+f1 = open("examples/outputPinnegarB64Minoracrg.txt", "w")
 f1.write(b64datam)
 f1.close()
 
