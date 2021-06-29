@@ -350,7 +350,7 @@ def rstfr(data, alg="stft",filt="love", s=100, n_it=400, alpha=0.1, beta=0.12, g
         semi[:,:,i], majo[:,:,i], mino[:,:,i], majon[:,:,i], minon[:,:,i] = semimm(multiply(10, tfry[:,i]),\
             multiply(10, tfrx[:,i]), multiply(10, tfrz[:,i]))
         i+=1
-        #print("Generating the semi major/minor ... ",np.round(i*100/N, 2), "%")
+        print("Generating the semi major/minor ... ",np.round(i*100/N, 2), "%")
 
     n2, n = len(semi[0, 0]), len(semi[0])
    

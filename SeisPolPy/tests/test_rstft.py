@@ -54,13 +54,3 @@ def test_rstfr_stft_condition():
 
    
 
-"""
-def rstfr_s_stft():
-    f1 = open("SeisPolPy/tests/outputb64files/outputRstfrB6_S_STFTMajor.txt", "r")
-    f2 = open("SeisPolPy/tests/outputb64files/outputRstfrB6_S_STFTMinor.txt", "r")
-    out1, out2 = Rstfr.rstfr(sig) 
-    assert out1 == f1.read()
-    assert out2 == f2.read()
-    f1.close()
-    f2.close()
-"""

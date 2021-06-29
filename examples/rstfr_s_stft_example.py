@@ -6,20 +6,20 @@ import base64
 import io
 import matplotlib.image as mpimg
 
-data = mat4py.loadmat('dataACRG.mat') # seismic data
+data = mat4py.loadmat('examples/dataACRG.mat') # seismic data
 sig = np.array([data['t'], data['r'], data['z']])
 b64dataM, b64datam, b64dataext, b64datarej = rstfr(sig, "s_stft", "love", 100, 400, 0.1, 0.12, 0.13, 0.26, 0.26, 0.23)
 
-f = open("outputRstfrB64_S_STFTMajor.txt", "w")
+f = open("examples/outputRstfrB64_S_STFTMajor.txt", "w")
 f.write(b64dataM)
 f.close()
-f1 = open("outputRstfrB64_S_STFTMinor.txt", "w")
+f1 = open("examples/outputRstfrB64_S_STFTMinor.txt", "w")
 f1.write(b64datam)
 f1.close()
-f2 = open("outputRstfrB64_S_STFTextraction.txt", "w")
+f2 = open("examples/outputRstfrB64_S_STFTextraction.txt", "w")
 f2.write(b64dataext)
 f2.close()
-f3 = open("outputRstfrB64_S_STFTrejection.txt", "w")
+f3 = open("examples/outputRstfrB64_S_STFTrejection.txt", "w")
 f3.write(b64datarej)
 f3.close()
 
