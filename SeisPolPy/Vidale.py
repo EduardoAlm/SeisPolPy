@@ -90,32 +90,24 @@ def vidale(data, window_size):
         # Polarization strenght of the signal -- Ps is near 1 if the signal is completely polarized in that there is only primarily one 
         # component of polarization, but Ps is 0 if the largest component of polarization is only as big as the other two combined.
         pol_strength[i] = 1. - (eig_values[1] + eig_values[0] / eig_values[2])
-        
-        # Degree of planar polarization -- Pp is 1 if the intermediate component of polarization is much larger than the smallest component, 
-        # but Pp is near 0 if the intermediate and smallest components of polarization are comparable.
-        degree_planar_pol[i] = 1. - (eig_values[1] / eig_values[0])
-
-
+    
     fig, axs = plt.subplots(3, 1)
-
+    
     plt.sca(axs[0])
     plt.plot(dip, c='gray',linewidth=1.5, label='dip')
     plt.title("Dip")
-    plt.xlabel('Time (s)')
     #plt.ylabel('0 ° dip - vector points horizontally in the direction back to the epicenter.')
 
     plt.sca(axs[1])
     plt.plot(strike, c='gray',linewidth=1.5, label='strike')
     plt.title("Strike")
-    plt.xlabel('Time (s)')
     #plt.ylabel('0 ° strike - vector points horizontally in the direction back to the epicenter')
 
     plt.sca(axs[2])
     plt.plot(elliptical_pol,c='gray',linewidth=1.5, label='Pe')
     plt.title("Elliptical component of polarization (Pe)")
-    plt.xlabel('Time (s)')
-    #plt.ylabel('1 and 0 for circularly/linearly polarized motion')
-
+    #plt.ylabel('1 and 0 for circularly/linearly polarized motion'
+    plt.xlabel("Time (s)")
     StringIObytes1 = io.BytesIO()
     fig.tight_layout()
     plt.savefig(StringIObytes1, format='jpg')
@@ -130,14 +122,8 @@ def vidale(data, window_size):
     plt.sca(axs[0])
     plt.plot(pol_strength, c='gray',linewidth=1.5, label='Ps')
     plt.title("Polarization strenght of the signal (Ps)")
-    plt.xlabel('Time (s)')
-    #plt.ylabel('Ps is near 1 = signal is completely polarized, Ps = 0 the largest component of polarization is only as big as the other two combined.')
 
-    plt.sca(axs[1])
-    plt.plot(degree_planar_pol,c='gray', linewidth=1.5, label='Pp')
-    plt.title("Degree of planar polarization (Pp)")
-    plt.xlabel('Time (s)')
-    #plt.ylabel('Pp = 1 - the intermediate component of polarization is much larger than the smallest component, Pp =/- 0 - the intermediate and smallest components of polarization are comparable.')
+    #plt.ylabel('Ps is near 1 = signal is completely polarized, Ps = 0 the largest component of polarization is only as big as the other two combined.')t components of polarization are comparable.')
 
     StringIObytes2 = io.BytesIO()
     fig.tight_layout()

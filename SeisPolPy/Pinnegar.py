@@ -22,6 +22,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import time
 import math
+from numpy.core.fromnumeric import size
 start_time = time.time()
 import scipy.sparse as sp
 import adjoint
@@ -91,7 +92,7 @@ def pinnegar(data, s=100):
     sig = data
 
     plt.rcParams['figure.figsize'] = [16, 12]
-    plt.rcParams.update({'font.size': 18})
+    plt.rcParams.update({'font.size': 13})
 
     length = len(sig[0])
    
@@ -155,18 +156,39 @@ def pinnegar(data, s=100):
         phi0[:, i] = ph0
         i+=1
 
-    plt.matshow(np.abs(np.transpose(smajor[:][:,:])))
-    plt.title("Semi Major")
+    half = math.floor(len(smajor)/2)
     
-    StringIObytes1 = io.BytesIO()
-    plt.savefig(StringIObytes1, format='jpg')
-    StringIObytes1.seek(0)
-    b64jpgdataM = base64.b64encode(StringIObytes1.read()).decode()
+    ab, bc= np.shape(np.abs(np.transpose(smajor[:][:,0:half])))
+    fdim = np.linspace(0, ab, 6)
+    fig,(ax1) = plt.subplots(1,1)
+    
+    a = ax1.imshow(np.abs(np.transpose(smajor[:][:,0:half])), aspect='auto')
+    ax1.set_yticks(fdim)
+    ax1.set_yticklabels([0, 0.1, 0.2, 0.3, 0.4, 0.5])
+    cbar = fig.colorbar(a)
+    cbar.set_label("Amplitude (μm)")
+    plt.title("Semi Major")
+    plt.xlabel('Time (s)')
+    plt.ylabel('Frequency (Hz)')
+
+
+    StringIObytes = io.BytesIO()
+    plt.savefig(StringIObytes, format='jpg')
     plt.show()
     plt.close()
+    StringIObytes.seek(0)
+    b64jpgdataM = base64.b64encode(StringIObytes.read()).decode()
 
-    plt.matshow(np.abs(np.transpose(sminor[:][:,:])))
+
+    fig,(ax2) = plt.subplots(1,1)
+    b = ax2.imshow(np.abs(np.transpose(sminor[:][:,0:half])),aspect='auto')
+    ax2.set_yticks(fdim)
+    ax2.set_yticklabels([0, 0.1, 0.2, 0.3, 0.4, 0.5])
+    cbar2 = fig.colorbar(b)
+    cbar2.set_label("Amplitude (μm)")
     plt.title("Semi Minor")
+    plt.xlabel('Time (s)')
+    plt.ylabel('Frequency (Hz)')
 
     StringIObytes2 = io.BytesIO()
     plt.savefig(StringIObytes2, format='jpg')

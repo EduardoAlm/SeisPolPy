@@ -9,11 +9,11 @@
    
    README   
 
-   modules
+   Modules
 
 
 
-Indices and tables
+Indices and Tables
 ==================
 
 * :ref:`genindex`

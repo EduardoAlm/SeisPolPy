@@ -86,30 +86,29 @@ def flinn(data, window_size):
     g2_r = np.vstack((np.zeros((len(window), 1)), g2_r))
     g2_t = np.vstack((np.zeros((len(window), 1)), g2_t))
 
-    fig, axs = plt.subplots(4, 1)
+    fig, axs = plt.subplots(4, 1, sharex=True, sharey=True)
+
+    fig.text(0.5, 0.004, 'Time (s)', ha='center')
+    fig.text(0.004, 0.5, 'Amplitude (μm)', va='center', rotation='vertical')
     plt.sca(axs[0])
     plt.plot(g1,c='gray', linewidth=1.5, label='rec')
     plt.title("Rectilinearity")
-    plt.xlabel('Time (s)')
-    plt.ylabel('Amplitude')
+ 
 
     plt.sca(axs[1])
     plt.plot(g2_z, c='gray', linewidth=1.5, label='z')
     plt.title("DIRECTION OF PARTICLE MOTION z")
-    plt.xlabel('Time (s)')
-    plt.ylabel('Amplitude')
+  
 
     plt.sca(axs[2])
     plt.plot(g2_r, c='gray', linewidth=1.5, label='r')
     plt.title("DIRECTION OF PARTICLE MOTION r")
-    plt.xlabel('Time (s)')
-    plt.ylabel('Amplitude')
+
 
     plt.sca(axs[3])
     plt.plot(g2_t, c='gray', linewidth=1.5, label='t')
     plt.title("DIRECTION OF PARTICLE MOTION t")
-    plt.xlabel('Time (s)')
-    plt.ylabel('Amplitude')
+
 
     StringIObytes = io.BytesIO()
     fig.tight_layout()
