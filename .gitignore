@@ -5,12 +5,12 @@ __pycache__/
 
 # C extensions
 #*.so
-#SeisPolPy/Rstfr.py   
-#SeisPolPy/Pinnegar.py   
-#SeisPolPy/tests/test_pinnegar.py
-#examples/Pinnegar2.py
-#examples/pinnegar_example.py
-# Distribution / packaging
+# SeisPolPy/Rstfr.py   
+SeisPolPy/Pinnegar.py   
+# SeisPolPy/tests/test_pinnegar.py
+# examples/Pinnegar2.py
+examples/acrg
+# Distribution/packaging
 .Python
 build/
 develop-eggs/

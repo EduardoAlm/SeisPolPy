@@ -1,16 +1,13 @@
-
 """
 RSTFR Method.
 
 :copyright:
     Eduardo Rodrigues de Almeida
-    Hamzeh Mohammadigheymasi
-    Paul Andrew Crocker
 :license:
     The MIT License (MIT)
     Copyright (c) 2021 MrEdwards
 """
-from numpy import shape, int16, maximum, conj, ceil, flipud, add, concatenate, reshape, int32, zeros, array, real, sqrt, dot, multiply, linspace, exp, float64, ones, pi, transpose, float16
+from numpy import shape, savetxt, loadtxt, int16, maximum, conj, ceil, flipud, add, concatenate, reshape, int32, zeros, array, real, sqrt, dot, multiply, linspace, exp, float64, ones, pi, transpose, float16
 
 from numpy.linalg import eigh
 from numpy import abs as abso
@@ -24,6 +21,7 @@ import io
 start_time = time.time()
 from scipy.sparse import dia_matrix
 from scipy.fftpack import ifft
+import forw_op  
 import adjoint 
 import I_stft
 import loopstft
@@ -100,8 +98,8 @@ def semimm(t, r, z):
     return semi, major, minor, major/maxim(abso(major)), minor/maxim(abso(minor))
 
 def forward(N, s):
-    """
-    :parameter N: length of component array
+    """import
+    :parameter N: length of component array "x"
     :type N: int
     :parameter s: with default value of S equal to 100.
     :type s: int
@@ -132,6 +130,10 @@ def stft_s_istx(x, s, n_it, mu):
 
     :parameter x: numpy array regarding the r signal component.
     :type x: array
+    :parameter y: numpy array regarding the t signal component.
+    :type y: array
+    :parameter z: numpy array regarding the z signal component.
+    :type z: array
     :parameter s: with default value of S equal to 100.
     :type s: int 
     :parameter n_it: default value is 400, corresponds to the number of iterations for the softthreshholding. \
@@ -139,7 +141,7 @@ def stft_s_istx(x, s, n_it, mu):
     :type n_it: int 
     :parameter mu: variable with the mu value of 1e-3.
     :type mu: int
-    :return: data array corresponding to r component of the signal, after applying the \
+    :return: three data arrays corresponding to each component of the signal, after applying the \
         sparse STFT. 
     """
     N = len(x)
@@ -154,8 +156,12 @@ def stft_s_isty( y, s, n_it, mu):
     Sparse STFT function which calls the forward function, the Cshared library for the adjoint function \
     and forward operator function, and soft threshholding function.
 
+    :parameter x: numpy array regarding the r signal component.
+    :type x: array
     :parameter y: numpy array regarding the t signal component.
     :type y: array
+    :parameter z: numpy array regarding the z signal component.
+    :type z: array
     :parameter s: with default value of S equal to 100.
     :type s: int 
     :parameter n_it: default value is 400, corresponds to the number of iterations for the softthreshholding. \
@@ -163,7 +169,7 @@ def stft_s_isty( y, s, n_it, mu):
     :type n_it: int 
     :parameter mu: variable with the mu value of 1e-3.
     :type mu: int
-    :return: data array corresponding to t component of the signal, after applying the \
+    :return: three data arrays corresponding to each component of the signal, after applying the \
         sparse STFT. 
     """
     N = len(y)
@@ -179,6 +185,10 @@ def stft_s_istz(z, s, n_it, mu):
     Sparse STFT function which calls the forward function, the Cshared library for the adjoint function \
     and forward operator function, and soft threshholding function.
 
+    :parameter x: numpy array regarding the r signal component.
+    :type x: array
+    :parameter y: numpy array regarding the t signal component.
+    :type y: array
     :parameter z: numpy array regarding the z signal component.
     :type z: array
     :parameter s: with default value of S equal to 100.
@@ -188,7 +198,7 @@ def stft_s_istz(z, s, n_it, mu):
     :type n_it: int 
     :parameter mu: variable with the mu value of 1e-3.
     :type mu: int
-    :return: data array corresponding to the z component of the signal, after applying the \
+    :return: three data arrays corresponding to each component of the signal, after applying the \
         sparse STFT. 
     """
     N = len(z)
@@ -400,8 +410,16 @@ def rstfr(data, alg="stft",filt="love", s=100, n_it=400, alpha=0.1, beta=0.12, g
         tfrx = stft_s_istx(r, s, n_it, mu)
         tfry = stft_s_isty(t, s, n_it, mu)
         tfrz = stft_s_istz(z, s, n_it, mu)
+        savetxt('tfrx.txt', tfrx, delimiter=',')
+        savetxt('tfry.txt', tfry, delimiter=',')
+        savetxt('tfrz.txt', tfrz, delimiter=',')
+        print("s_stft: already loaded")
     else:
         raise Exception("Please choose an available method (stft/s_stft).")
+
+    tfrx = loadtxt('tfrx.txt', dtype='float64', delimiter=',')
+    tfry = loadtxt('tfry.txt', dtype='float64', delimiter=',')
+    tfrz = loadtxt('tfrz.txt', dtype='float64', delimiter=',')
 
     nf = ceil(N/2).astype(int)
     semi, majo, mino, majon, minon,i  = zeros((12,nf,N)), zeros((3,nf,N)), zeros((3,nf,N)), \

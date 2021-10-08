@@ -47,7 +47,7 @@ templates_path = ['_templates']
 # This pattern also affects html_static_path and html_extra_path.
 exclude_patterns = []
 
-autodoc_mock_imports = [ 'adjoint', 'forw_op', 'diags']
+autodoc_mock_imports = [ 'adjoint', 'forw_op', 'diags', 'I_stft', 'loopstft']
 
 
 # -- Options for HTML output -------------------------------------------------

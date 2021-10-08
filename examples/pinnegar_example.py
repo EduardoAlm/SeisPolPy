@@ -12,7 +12,7 @@ import pyasdf
 #print(ds.waveforms.list())
 #data = ds.waveforms['II.ABKT'].synthetics
 #sig = np.array([data.traces[0].data, data.traces[1].data, data.traces[2].data])
-data = mat4py.loadmat('examples/dataII.ABKTvm.mat') # seismic data
+data = mat4py.loadmat('examples/dataACRG.mat') # seismic data
 sig = np.array([data['t'], data['r'], data['z']])
 b64dataM, b64datam = pinnegar(sig)
 

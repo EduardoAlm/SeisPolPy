@@ -9,7 +9,7 @@
    
    README   
 
-   Modules
+   SeisPolPy-Modules
 
 
 

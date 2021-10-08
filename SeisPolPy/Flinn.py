@@ -1,8 +1,11 @@
+
 """
 Flinn Method.
 
 :copyright:
     Eduardo Rodrigues de Almeida
+    Hamzeh Mohammadigheymasi
+    Paul Andrew Crocker
 :license:
     The MIT License (MIT)
     Copyright (c) 2021 MrEdwards
