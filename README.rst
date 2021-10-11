@@ -55,15 +55,10 @@ or::
 .. note::
     SeisPolPy is not yet available at PyPI. The library will only be uploaded upon it's release.
 
+Documentation
+-------------
 
-Changelog
----------
-
-The changelog is presented below:
-
-.. changelog::
-    :changelog-url: https://seispolpy.readthedocs.io/en/latest/#changelog
-    :github: https://github.com/EduardoAlm/SeisPolPy/releases/
+The documentation can be found at `SeisPolPydocs <https://seispolpy.readthedocs.io/en/latest/>`_.
 
 Contribution
 ------------
