@@ -10,7 +10,7 @@ Overview
 --------
 
 SeisPolPy is an open-source project which aims to provide a **Python library for processing seismic time series**. 
-So far, SeisPolPy provides two, well known, methods that allow the extraction of relevant information from the seismological time series (see [CIT1975]_, [CIT1986]_), as well as a new method developed by the authors ([CIT2021]_). 
+So far, SeisPolPy provides two, well known, methods that allow the extraction of relevant information from the seismological time series (see [CIT1965]_, [CIT1986]_), as well as a new method developed by the authors ([CIT2021]_). 
 This latter method (RSTFR) consists of an adaptation of already existing methods and improves them by presenting the option of taking advantage of sparsity to process the data, upon the use of the module implementing the RSTFR algorithm its asked for the article and its respective authors to be cited.
 
 SeisPolPy main objective is to empower its users with **reliable and efficient methods** to make the task of processing seismic time series more straightforward. 
@@ -86,6 +86,6 @@ This project is licensed under the MIT License - check the `LICENSE <https://git
 References
 ----------
 
-.. [CIT1975] Flinn, E. A. "Signal analysis using rectilinearity and direction of particle motion." Proceedings of the IEEE 53.12 (1965): 1874-1876.
+.. [CIT1965] Flinn, E. A. "Signal analysis using rectilinearity and direction of particle motion." Proceedings of the IEEE 53.12 (1965): 1874-1876.
 .. [CIT1986] Vidale, John E. "Complex polarization analysis of particle motion." Bulletin of the Seismological society of America 76.5 (1986): 1393-1405.
 .. [CIT2021] H. Mohammadigheymasi, P. Crocker, M. Fathi, E. Almeida, G. Silveira, A. Gholami,and M. Schimmel, “Sparsity­promoting approach to polarization analysis of seismicsignals in the time­frequency domain,”IEEE Transactions on Geoscience andRemote Sensing, 7 2021. [Online]. Available:https://doi.org/10.36227/techrxiv.14910063.v1 ,8,12,37,59,65.
