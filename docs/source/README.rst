@@ -84,4 +84,4 @@ References
 
 .. [CIT1975] Flinn, E. A. "Signal analysis using rectilinearity and direction of particle motion." Proceedings of the IEEE 53.12 (1965): 1874-1876.
 .. [CIT1986] Vidale, John E. "Complex polarization analysis of particle motion." Bulletin of the Seismological society of America 76.5 (1986): 1393-1405.
-.. [CIT2021] H. Mohammadigheymasi, P. Crocker, M. Fathi, E. Almeida, G. Silveira, A. Gholami,and M. Schimmel, “Sparsity­promoting approach to polarization analysis of seismicsignals in the time­frequency domain,”IEEE Transactions on Geoscience andRemote Sensing, 7 2021. [Online]. Available:https://doi.org/10.36227/techrxiv.14910063.v1ix,8,12,37,59,65.
+.. [CIT2021] H. Mohammadigheymasi, P. Crocker, M. Fathi, E. Almeida, G. Silveira, A. Gholami,and M. Schimmel, “Sparsity­promoting approach to polarization analysis of seismicsignals in the time­frequency domain,”IEEE Transactions on Geoscience andRemote Sensing, 7 2021. [Online]. Available:https://doi.org/10.36227/techrxiv.14910063.v1 ,8,12,37,59,65.
