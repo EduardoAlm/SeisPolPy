@@ -58,7 +58,7 @@ or::
 Documentation
 -------------
 
-The documentation can be found at `SeisPolPydocs <https://seispolpy.readthedocs.io/en/latest/>`_.
+The documentation can be found at `SeisPolPydocs <https://seispolpy.readthedocs.io/en/main/>`_.
 
 Contribution
 ------------
